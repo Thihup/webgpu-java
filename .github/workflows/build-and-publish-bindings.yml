@@ -47,11 +47,11 @@ jobs:
       
       - name: Extract jextract (Linux)
         if: matrix.os == 'ubuntu-latest'
-        run: tar -xf $RUNNER_TEMP/jdk.tar.gz
+        run: tar -xf $RUNNER_TEMP/${{ matrix.jextract_archive }}
       
       - name: Extract jextract (Windows)
         if: matrix.os == 'windows-latest'
-        run: Expand-Archive -Path $env:RUNNER_TEMP/jdk.zip -DestinationPath .
+        run: Expand-Archive -Path $env:RUNNER_TEMP\${{ matrix.jextract_archive }} -DestinationPath .
         shell: pwsh
       
       - name: Set JEXTRACT_HOME (Linux)
