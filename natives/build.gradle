@@ -24,7 +24,7 @@ task unzip(type: Copy) {
 }
 
 task copyWgpuHeaders(type: Copy) {
-    from "bin/$wgpuVersion/$os-$arch-$type/webgpu.h"
+    from "bin/$wgpuVersion/$os-$arch-$type/include/webgpu/webgpu.h"
     into 'build/headers/'
 }
 
