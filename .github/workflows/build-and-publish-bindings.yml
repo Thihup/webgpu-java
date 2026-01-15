@@ -24,13 +24,11 @@ jobs:
           - os: ubuntu-latest
             jextract_url: https://download.java.net/java/early_access/jextract/25/2/openjdk-25-jextract+2-4_linux-x64_bin.tar.gz
             jextract_archive: jdk.tar.gz
-            extract_command: tar -xf $RUNNER_TEMP/jdk.tar.gz
             os_name: linux
             gradle_cmd: ./gradlew
           - os: windows-latest
             jextract_url: https://download.java.net/java/early_access/jextract/25/2/openjdk-25-jextract+2-4_windows-x64_bin.zip
             jextract_archive: jdk.zip
-            extract_command: Expand-Archive -Path $env:RUNNER_TEMP/jdk.zip -DestinationPath .
             os_name: windows
             gradle_cmd: .\gradlew.bat
     runs-on: ${{ matrix.os }}
@@ -47,9 +45,14 @@ jobs:
           Invoke-WebRequest -Uri "${{ matrix.jextract_url }}" -OutFile "$env:RUNNER_TEMP\${{ matrix.jextract_archive }}"
         shell: pwsh
       
-      - name: Extract jextract
-        run: ${{ matrix.extract_command }}
-        shell: ${{ matrix.os == 'windows-latest' && 'pwsh' || 'bash' }}
+      - name: Extract jextract (Linux)
+        if: matrix.os == 'ubuntu-latest'
+        run: tar -xf $RUNNER_TEMP/jdk.tar.gz
+      
+      - name: Extract jextract (Windows)
+        if: matrix.os == 'windows-latest'
+        run: Expand-Archive -Path $env:RUNNER_TEMP/jdk.zip -DestinationPath .
+        shell: pwsh
       
       - name: Set JEXTRACT_HOME (Linux)
         if: matrix.os == 'ubuntu-latest'
