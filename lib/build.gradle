@@ -1,13 +1,12 @@
 import java.nio.file.Paths
 import org.gradle.internal.os.OperatingSystem
 
-def isWindows = OperatingSystem.current().isWindows()
-
 plugins {
     id 'java-library'
     id 'maven-publish'
 }
 
+def isWindows = OperatingSystem.current().isWindows()
 def wgpuVersion = project.findProperty('wgpuVersion')
 
 configurations {
