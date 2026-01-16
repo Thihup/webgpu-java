@@ -61,7 +61,8 @@ task invokeJextract(type: Exec){
     args (
         configurations.headers.files[0],
         '-t', 'com.myworldvw.webgpu',
-        '--output', 'build/bindings'
+        '--output', 'build/bindings',
+        '--library', 'wgpu_native'
     )
 }
 
