@@ -80,8 +80,14 @@ task jextract(dependsOn: [invokeJextract, cleanupExtras])
 
 tasks.findByName('compileJava').dependsOn jextract
 
-task bindings(type: Copy, dependsOn: [jextract, jar]){
+task sourcesJar(type: Jar, dependsOn: jextract) {
+    archiveClassifier = 'sources'
+    from 'build/bindings'
+}
+
+task bindings(type: Copy, dependsOn: [jextract, jar, sourcesJar]){
     from jar
+    from sourcesJar
     into 'build'
 }
 
@@ -93,6 +99,7 @@ publishing {
             version = "$wgpuVersion"
 
             artifact file("build/webgpu.jar")
+            artifact sourcesJar
         }
     }
     repositories {
