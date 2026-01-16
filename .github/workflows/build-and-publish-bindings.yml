@@ -88,7 +88,7 @@ jobs:
         run: ${{ matrix.gradle_cmd }} "-PwgpuVersion=${{ inputs.wgpuVersion }}" "-Pos=${{ matrix.os_name }}" ':natives:copyWgpuHeaders'
 
       - name: Generate bindings
-        run: ${{ matrix.gradle_cmd }} "-PwgpuVersion=${{ inputs.wgpuVersion }}" "-Pjextract.home=${{ env.JEXTRACT_HOME }}" :lib:bindings
+        run: ${{ matrix.gradle_cmd }} "--stacktrace" "-PwgpuVersion=${{ inputs.wgpuVersion }}" "-Pjextract.home=${{ env.JEXTRACT_HOME }}" :lib:bindings
 
       - name: Publish bindings as artifact
         uses: actions/upload-artifact@v4
